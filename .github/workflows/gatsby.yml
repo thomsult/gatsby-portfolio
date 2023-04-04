@@ -80,7 +80,7 @@ jobs:
         env:
           PREFIX_PATHS: 'true'
           SITE_URL: https://thomsult.github.io/gatsby-portfolio/
-        run: ${{ steps.detect-package-manager.outputs.manager }} run build
+        run: ${{ steps.detect-package-manager.outputs.manager }} run deploy
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:

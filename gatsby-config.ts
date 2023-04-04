@@ -3,6 +3,7 @@ const path = require('path')
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 })
+
 const config: GatsbyConfig = {
   siteMetadata: {
     title: "Portfolio Thomas Sultan",
