@@ -33,8 +33,6 @@ jobs:
   # Build job
   build:
     runs-on: self-hosted
-    secrets:
-      SITE_URL: ${{ secret.SITE_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -81,6 +79,7 @@ jobs:
       - name: Build with Gatsby
         env:
           PREFIX_PATHS: 'true'
+          SITE_URL: https://thomsult.github.io/gatsby-portfolio/
         run: ${{ steps.detect-package-manager.outputs.manager }} run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
