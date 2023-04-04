@@ -13,22 +13,22 @@ const config: GatsbyConfig = {
       {
         name: 'Home',
         type: 'internal',
-        link: './'
+        link: '#Home'
       },
       {
         name: 'About',
         type: 'internal',
-        link: './#About'
+        link: '#About'
       },
       {
         name: 'Projects',
         type: 'internal',
-        link: './#Projects'
+        link: '#Projects'
       },
       {
         name: 'Contact',
         type: 'internal',
-        link: './#Contact'
+        link: '#Contact'
       },
       {
         name: 'Mon CV',
