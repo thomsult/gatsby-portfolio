@@ -33,6 +33,8 @@ jobs:
   # Build job
   build:
     runs-on: self-hosted
+    env:
+      SITE_URL: ${{ secret.SITE_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -76,11 +78,6 @@ jobs:
             ${{ runner.os }}-gatsby-build-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      - name: Create .env file
-        run: |   
-          echo "SITE_URL=${{ secret.SITE_URL }}" >> .env
-          echo "GATSBY_SITE_URL=${{ secret.SITE_URL }}" >> .env
-          
       - name: Build with Gatsby
         env:
           PREFIX_PATHS: 'true'
