@@ -1,7 +1,6 @@
 import * as React from "react";
 import { graphql, type HeadFC, type PageProps } from "gatsby";
 
-import Layout from "../components/layout";
 import Index from "../content/index.mdx"
 import {SEO} from "../components/seo";
 import { GatsbyImage,getImage } from 'gatsby-plugin-image';

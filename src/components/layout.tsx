@@ -17,11 +17,13 @@ import Project from "./section/project";
 import Tools from './section/tools';
 import Formulaire from "./section/formulaire";
 import ImageHalf from "./utils/imageHalfSection";
+import Overlay from "./context/headerContext";
 interface LayoutProps {
   children: React.ReactNode;
+  location: Location;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC<LayoutProps> = ({ children,location }) => {
 const components = {
   ...Project,
   ...About,
@@ -32,7 +34,6 @@ const components = {
     ImageHalf:ImageHalf
     
 }
-
 
 
   const componentsWithStyles = useThemedStylesWithMdx(
@@ -49,7 +50,7 @@ const components = {
                 scrollBehavior: "smooth",
             },
         }}/>
-      <NavBar/>
+        <Overlay location={location}>
       <main sx={{
         paddingTop: "4rem",
         
@@ -58,6 +59,7 @@ const components = {
               {children}
           </MDXProvider>
       </main>
+      </Overlay>
     </ThemeProvider>
   );
 };

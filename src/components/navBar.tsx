@@ -4,6 +4,7 @@ import React, { ReactNode, createContext, useEffect, useState } from "react";
 import { Link, useStaticQuery, graphql } from "gatsby";
 import { jsx } from "theme-ui";
 import theme from "../gatsby-plugin-theme-ui/index";
+import { useHeaderContext } from "./context/headerContext";
 
 interface Header extends React.FC<{ children: ReactNode }> {
   ContextButton: React.Context<{ isOpen: boolean }>;
@@ -40,7 +41,8 @@ Header.Nav = ({ children }) => {
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "center",
-        height: "100%",
+
+        height: "auto",
         width: "100%",
         maxWidth: "1200px",
         margin: "0 auto",
@@ -61,9 +63,6 @@ Header.Nav = ({ children }) => {
   );
 };
 
-const ContextButton = createContext({ isOpen: false });
-Header.ContextButton = ContextButton;
-
 Header.Button = ({
   label,
   children,
@@ -71,10 +70,12 @@ Header.Button = ({
   label: string;
   children: ReactNode;
 }) => {
-  const [open, setOpen] = useState(false);
+
+
+  const { isOpen,setIsOpen } = useHeaderContext();
   const handleResize = () => {
     if (window.innerWidth > 768) {
-      setOpen(false);
+      setIsOpen(false);
     }
   };
 
@@ -84,11 +85,16 @@ Header.Button = ({
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+
+
+
+
   const color = theme.colors?.menuHamburger;
   return (
-    <Header.ContextButton.Provider value={{ isOpen: open }}>
+    <>
       <button
-        onClick={() => setOpen(!open)}
+        onClick={() => setIsOpen(!isOpen)}
         aria-label={label}
         sx={{
           display: "block",
@@ -107,7 +113,7 @@ Header.Button = ({
             display: "block",
             bg: color,
             height: "3px",
-            transform: open
+            transform: isOpen
               ? "translate(0px,3px) rotate(-45deg)"
               : "translate(0px,-5px) rotate(0)",
             borderRadius: "3px",
@@ -118,14 +124,14 @@ Header.Button = ({
             display: "block",
             bg: color,
             height: "3px",
-            transform: open
+            transform: isOpen
               ? "translate(0px,-3px) rotate(45deg)"
               : "translate(0px,5px) rotate(0)",
             borderRadius: "3px",
             transition: "all 0.3s ease-in-out",
           },
           "@media (min-width: 768px)": {
-            display: open ? "block" : "none",
+            display: isOpen ? "block" : "none",
           },
         }}
       >
@@ -134,7 +140,7 @@ Header.Button = ({
             display: "block",
             bg: color,
             height: "3px",
-            width: open ? "0" : "100%",
+            width: isOpen ? "0" : "100%",
             transition: "width 0.3s ease-in-out",
             margin: "0 auto",
             borderRadius: "3px",
@@ -142,12 +148,12 @@ Header.Button = ({
         />
       </button>
       {children}
-    </Header.ContextButton.Provider>
+    </>
   );
 };
 
 const MenuLinks: MenuLinks = ({ children }: { children: ReactNode }) => {
-  const { isOpen } = React.useContext(ContextButton);
+  const { isOpen } = useHeaderContext();
   return (
     <ul
       sx={{
@@ -157,14 +163,14 @@ const MenuLinks: MenuLinks = ({ children }: { children: ReactNode }) => {
         justifyContent: isOpen ? "flex-start" : "flex-end",
         listStyle: "none",
         gap: "1.5rem",
-        paddingTop: isOpen ? "13.5em" : "1em",
         paddingLeft: isOpen ? 0 : "auto",
         paddingBottom: isOpen ? "1.5rem" : "0",
         width: "100%",
         minHeight: "2em",
+        paddingTop: "1rem",
         transition: "width 0.3s ease-in-out",
-        height: isOpen ? "auto" : "2em",
-        margin: isOpen ? "0 0" : "0 auto",
+        height: isOpen ? "100%" : "2em",
+        backgroundColor: isOpen ? "white" : "transparent",
         "@media (min-width: 768px)": {
           display: "flex",
         },
@@ -179,7 +185,7 @@ const MenuLinks: MenuLinks = ({ children }: { children: ReactNode }) => {
 };
 
 MenuLinks.Item = ({ children, link, type }) => {
-  const { isOpen } = React.useContext(ContextButton);
+  const { isOpen,setIsOpen } = useHeaderContext();
   return (
     <li
       sx={{
@@ -209,7 +215,12 @@ MenuLinks.Item = ({ children, link, type }) => {
             opacity: "0.8",
           },
         }}
-        to={link}
+        to={`/${link}`}
+        onClick={() => {
+          if (isOpen) {
+            setIsOpen(false);
+          }
+        }}
       >
         {children}
       </Link>
@@ -219,11 +230,12 @@ MenuLinks.Item = ({ children, link, type }) => {
   );
 };
 
-const NavBar: React.FC = () => {
+const NavBar: React.FC<{path:string}> = ({path}) => {
   const data = useStaticQuery(graphql`
     query {
       site {
         siteMetadata {
+          siteUrl
           title
           menuLinks {
             link
@@ -239,7 +251,17 @@ const NavBar: React.FC = () => {
       <Header.Nav>
         <Header.Button label="menu">
           <MenuLinks>
-            {data.site.siteMetadata.menuLinks.map(
+            {data.site.siteMetadata.menuLinks
+            .filter((el)=>{
+              if(path==="/"){
+                return el
+              }else{
+                if(el.name ==="Home" || el.name ==="Mon CV"){
+                  return el
+                }
+              }
+            })
+            .map(
               (link: { link: string; name: string; type: string }) => (
                 <MenuLinks.Item
                   key={link.name}

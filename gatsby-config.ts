@@ -15,7 +15,7 @@ const config: GatsbyConfig = {
       {
         name: 'Home',
         type: 'internal',
-        link: '#Home'
+        link: ''
       },
       {
         name: 'About',
