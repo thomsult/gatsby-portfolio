@@ -1,0 +1,72 @@
+---
+title: Home Page
+---
+
+<Hero data={props}>
+  <HeroText>
+    <HeroHeading>Développeur web Toulousain</HeroHeading>
+    <HeroParagraph>Je suis **Developeur Web** par passion pour le web et le
+      développement. Je suis très investi, Autonome et Curieux</HeroParagraph>
+    <HeroList>
+      <HeroListItem>
+        <IconWithName url="https://codepen.io/thomsult" name="Codepen" img />
+      </HeroListItem>
+      <HeroListItem>
+        <IconWithName url="https://github.com/thomsult" name="GitHub" />
+      </HeroListItem>
+      <HeroListItem>
+        <IconWithName
+          url="https://www.linkedin.com/in/thomas-sultan-a035a5235/"
+          name="LinkedIn"
+        />
+      </HeroListItem>
+    </HeroList>
+  </HeroText>
+  <HeroImage img={props.HeroImage} />
+</Hero>
+<About>
+  <ImageHalf caption='{"href":"https://unsplash.com/fr/@mahdi17","name":"© Md Mahdi - Unsplash.com"}' />
+  <AboutText>
+    <h1>A propos de Moi</h1>
+    
+      Je suis **passionné** d'informatique depuis mon enfance, j'ai commencé par 
+      m'intéresser à la 3D. **Curieux** de nature,j'ai rapidement 
+      voulu comprendre le fonctionnement de l'outil que j'utilisais, 
+      et j'ai commencé à explorer l'informatique plus en profondeur.
+
+      Après des études en graphisme qui ne m'ont pas satisfait, j'ai travaillé dans
+      l'entreprise de mon père tout en continuant à explorer ma passion pour l'informatique.
+      J'ai appris à créer des sites web, à gérer des ordinateurs et à développer
+      mes compétences en programmation en
+      **autonomie**.
+
+      Au fil des années, j'ai acquis du **savoir-faire** et
+      **savoir-être** professionnel et relationnel, Mais suite à la
+      fermeture de l'entreprise, j'ai décidé de me reconvertir dans le numérique.
+
+      Je me suis formé en **autodidacte** pendant 6 mois pour me
+      préparer à une formation de **Développeur web**. J'ai
+      découvert React, Angular et Vue JS au travers des exercices et tutoriels,
+      J'ai suivi une formation de 5 mois intensifs à la Wild Code School où je
+      me suis perfectionné à JavaScript.
+
+      Aujourd'hui, je suis heureux de travailler dans le numérique et de **collaborer** avec 
+      d'autres personnes pour faire grandir des projets. Je suis très
+      investi dans mon travail et je suis constamment à la recherche de nouveaux
+      défis pour améliorer mes **compétences**.
+
+      Si vous cherchez quelqu'un **d’enthousiaste** à l'idée d'un nouveaux
+      projets Web et qui est prêt à relever ces manches je serais ravi de discuter avec vous.
+
+    <AboutCompetences title="Mes compétence"
+    competences='[
+        "HTML","CSS","JavaScript","React","Node","Linux","Git","Vscode"
+    ]'
+    
+    />
+
+  </AboutText>
+</About>
+<ProjectSection header="Mes Projets" projects={props.projects} />
+<Tools />
+<Formulaire />
