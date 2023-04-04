@@ -31,6 +31,15 @@ defaults:
     shell: bash
 
 jobs:
+
+  create-envfile:
+    runs-on: self-hosted
+    steps:
+    - name: Make envfile
+      uses: SpicyPizza/create-envfile@v1.3
+      with:
+        envkey_SITE_URL: ${{ vars.SITE_URL }}
+
   # Build job
   build:
     runs-on: self-hosted
@@ -76,13 +85,6 @@ jobs:
             ${{ runner.os }}-gatsby-build-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      - name: Add dotEnv
-        uses: SpicyPizza/create-envfile@v1.3
-        with:
-          envkey_SITE_URL: ${{ vars.SITE_URL }}
-          file_name: .env
-          fail_on_empty: false
-
       - name: Build with Gatsby
         env:
           PREFIX_PATHS: 'true'
