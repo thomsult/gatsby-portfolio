@@ -76,10 +76,16 @@ jobs:
             ${{ runner.os }}-gatsby-build-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      - name: Add dotEnv
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_SITE_URL: ${{ vars.SITE_URL }}
+          file_name: .env
+          fail_on_empty: false
+
       - name: Build with Gatsby
         env:
           PREFIX_PATHS: 'true'
-          SITE_URL : ${{ vars.SITE_URL }}
         run: ${{ steps.detect-package-manager.outputs.manager }} run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
