@@ -5,6 +5,7 @@ require("dotenv").config({
 })
 
 const config: GatsbyConfig = {
+  pathPrefix: '/gatsby-portfolio',
   siteMetadata: {
     title: "Portfolio Thomas Sultan",
     description: "A portfolio website built with React and Gatsby",
