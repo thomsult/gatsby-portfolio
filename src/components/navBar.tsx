@@ -7,7 +7,6 @@ import theme from "../gatsby-plugin-theme-ui/index";
 import { useHeaderContext } from "./context/headerContext";
 
 interface Header extends React.FC<{ children: ReactNode }> {
-  ContextButton: React.Context<{ isOpen: boolean }>;
   Nav: React.FC<{ children: ReactNode }>;
   Button: React.FC<{ label: string; children: ReactNode }>;
 }
@@ -72,10 +71,11 @@ Header.Button = ({
 }) => {
 
 
-  const { isOpen,setIsOpen } = useHeaderContext();
+  const { isOpen,toggleMenu } = useHeaderContext();
   const handleResize = () => {
     if (window.innerWidth > 768) {
-      setIsOpen(false);
+      toggleMenu(false);
+      
     }
   };
 
@@ -94,7 +94,7 @@ Header.Button = ({
   return (
     <>
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => toggleMenu(!isOpen)}
         aria-label={label}
         sx={{
           display: "block",
@@ -185,7 +185,7 @@ const MenuLinks: MenuLinks = ({ children }: { children: ReactNode }) => {
 };
 
 MenuLinks.Item = ({ children, link, type }) => {
-  const { isOpen,setIsOpen } = useHeaderContext();
+  const { isOpen,toggleMenu } = useHeaderContext();
   return (
     <li
       sx={{
@@ -218,7 +218,7 @@ MenuLinks.Item = ({ children, link, type }) => {
         to={`/${link}`}
         onClick={() => {
           if (isOpen) {
-            setIsOpen(false);
+            toggleMenu(false);
           }
         }}
       >
@@ -231,6 +231,7 @@ MenuLinks.Item = ({ children, link, type }) => {
 };
 
 const NavBar: React.FC<{path:string}> = ({path}) => {
+  console.log(path)
   const data = useStaticQuery(graphql`
     query {
       site {
@@ -253,7 +254,7 @@ const NavBar: React.FC<{path:string}> = ({path}) => {
           <MenuLinks>
             {data.site.siteMetadata.menuLinks
             .filter((el)=>{
-              if(path==="/"){
+              if(path===process.env.PATH_PREFIX ){
                 return el
               }else{
                 if(el.name ==="Home" || el.name ==="Mon CV"){

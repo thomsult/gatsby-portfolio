@@ -2,15 +2,12 @@
 /** @jsx jsx */
 /** @jsxFrag */
 
-import React from 'react';
+import React, { FC, SetStateAction } from 'react';
 import NavBar from '../../components/navBar';
 import {jsx} from 'theme-ui';
 
 
-interface IContext {
-  isOpen?: boolean;
-  setIsOpen?: (isOpen: boolean) => void;
-}
+
 interface IProps {
   children: React.ReactNode;
   location: {
@@ -18,11 +15,20 @@ interface IProps {
   }
 }
 
+interface IHeaderContext {
+  isOpen: Boolean;
+  toggleMenu:(bool?:Boolean)=>void;
+}
+
+
+const defaultState = {
+  isOpen: false,
+  toggleMenu: () => {},
+};
 
 
 
-
-const Context:React.Context<IContext> = React.createContext({})
+const Context = React.createContext<IHeaderContext>(defaultState)
 
 
 export const useHeaderContext = () => React.useContext(Context)
@@ -30,9 +36,13 @@ export const useHeaderContext = () => React.useContext(Context)
 
 
 const Overlay:React.FC<IProps> = ({children,location}) => {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(defaultState.isOpen);
+  const toggleMenu = (bool:Boolean = !isOpen) => setIsOpen(Boolean(bool));  ;
+
+console.log(process.env.PATH_PREFIX)
+
   const {pathname} = location
-  return (<Context.Provider value={{isOpen,setIsOpen}}>
+  return (<Context.Provider value={{isOpen,toggleMenu}}>
     <div 
     onClick={() => setIsOpen(false)}
     onKeyDown={() => setIsOpen(false)}
