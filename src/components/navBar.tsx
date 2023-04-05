@@ -231,7 +231,7 @@ MenuLinks.Item = ({ children, link, type }) => {
 };
 
 const NavBar: React.FC<{path:string}> = ({path}) => {
-  const isHomepage = location.pathname === withPrefix("/")
+  const isHomepage = path === withPrefix("/")
   const data = useStaticQuery(graphql`
     query {
       site {
