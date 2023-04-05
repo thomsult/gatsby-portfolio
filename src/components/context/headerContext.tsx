@@ -10,9 +10,7 @@ import {jsx} from 'theme-ui';
 
 interface IProps {
   children: React.ReactNode;
-  location: {
-    pathname: string;
-  }
+  isHomePage: Boolean;
 }
 
 interface IHeaderContext {
@@ -35,11 +33,10 @@ export const useHeaderContext = () => React.useContext(Context)
 
 
 
-const Overlay:React.FC<IProps> = ({children,location}) => {
+const Overlay:React.FC<IProps> = ({children,isHomePage}) => {
   const [isOpen, setIsOpen] = React.useState(defaultState.isOpen);
   const toggleMenu = (bool:Boolean = !isOpen) => setIsOpen(Boolean(bool));
 
-  const {pathname} = location
   return (<Context.Provider value={{isOpen,toggleMenu}}>
     <div 
     onClick={() => setIsOpen(false)}
@@ -56,7 +53,7 @@ const Overlay:React.FC<IProps> = ({children,location}) => {
       transition: "opacity 0.3s ease-in-out",
     }}>
      </div>
-     <NavBar path={pathname}/>
+     <NavBar isHomePage={isHomePage}/>
      {children}</Context.Provider>
   )
 }

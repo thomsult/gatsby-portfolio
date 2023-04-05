@@ -230,8 +230,7 @@ MenuLinks.Item = ({ children, link, type }) => {
   );
 };
 
-const NavBar: React.FC<{path:string}> = ({path}) => {
-  const isHomepage = path === withPrefix("/")
+const NavBar: React.FC<{isHomePage:Boolean}> = ({isHomePage}) => {
   const data = useStaticQuery(graphql`
     query {
       site {
@@ -254,7 +253,7 @@ const NavBar: React.FC<{path:string}> = ({path}) => {
           <MenuLinks>
             {data.site.siteMetadata.menuLinks
             .filter((el: { name: string; })=>{
-              if(isHomepage ){
+              if(isHomePage ){
                 return el
               }else{
                 if(el.name ==="Home" || el.name ==="Mon CV"){
