@@ -106,7 +106,7 @@ const ProjectEntries: React.FC<ProjectEntryProps> = ({
             color: "primary",
             textDecoration: "none",
           }}
-          href={`./projects/${nameLowerCase}/`}
+          href={`./${name}/`}
         >
           {image && (
             <GatsbyImage

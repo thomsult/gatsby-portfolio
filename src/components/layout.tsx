@@ -18,7 +18,6 @@ import ImageHalf from "./utils/imageHalfSection";
 import Overlay from "./context/headerContext";
 import { withPrefix } from "gatsby";
 
-import Pages from "./pages/pages";
 interface LayoutProps {
   children: React.ReactNode;
   location: Location;
@@ -35,13 +34,14 @@ const Layout: React.FC<LayoutProps> = (props) => {
     ImageHalf: ImageHalf,
   };
   const isHomePage = props.location.pathname === withPrefix("/");
-  const { children, location } = props;
+  const { children } = props;
   const componentsWithStyles = useThemedStylesWithMdx(
     useMDXComponents(components)
   );
   const MainTheme = {
     paddingTop: "4rem",
   };
+
   return (
     <ThemeProvider theme={theme}>
       <Global
@@ -55,15 +55,11 @@ const Layout: React.FC<LayoutProps> = (props) => {
         }}
       />
       <Overlay isHomePage={isHomePage}>
-        {isHomePage ? (
           <main sx={MainTheme}>
             <MDXProvider components={componentsWithStyles}>
               {children}
             </MDXProvider>
           </main>
-        ) : (
-          <Pages sx={MainTheme} {...props} />
-        )}
       </Overlay>
     </ThemeProvider>
   );
