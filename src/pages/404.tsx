@@ -9,15 +9,13 @@ import theme from "../gatsby-plugin-theme-ui/index";
 
 const NotFoundPage: React.FC<PageProps> = () => {
   return (
-    <Layout>
-      <section>
+    <section>
         <h1 sx={theme.styles?.h1}>Page introuvable!</h1>
         <p>
           Sorry 😔, we couldn’t find what you were looking for.
         </p>
         <Link to="/">Go home</Link>.
       </section>
-    </Layout>
   );
 };
 

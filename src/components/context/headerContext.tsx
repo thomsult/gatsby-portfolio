@@ -42,7 +42,7 @@ const Overlay:React.FC<IProps> = ({children,location}) => {
       left: 0,
       width: "100%",
       height: "100%",
-      zIndex: 1000,
+      zIndex: isOpen? 1000 : -1000,
       opacity: isOpen? 0.5 : 0,
       bg:"black",
       transition: "opacity 0.3s ease-in-out",
