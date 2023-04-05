@@ -253,7 +253,7 @@ const NavBar: React.FC<{path:string}> = ({path}) => {
         <Header.Button label="menu">
           <MenuLinks>
             {data.site.siteMetadata.menuLinks
-            .filter((el)=>{
+            .filter((el: { name: string; })=>{
               if(path===process.env.PATH_PREFIX ){
                 return el
               }else{

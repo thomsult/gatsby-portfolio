@@ -79,8 +79,8 @@ jobs:
       - name: Build with Gatsby
         env:
           PREFIX_PATHS: 'true'
-          PATH_PREFIX: ${{ steps.pages.outputs.path_prefix }}
-          SITE_URL: https://thomsult.github.io/${{ steps.pages.outputs.path_prefix }}
+          PATH_PREFIX: ${{ steps.pages.outputs.base_path }}
+          SITE_URL: ${{ steps.pages.outputs.base_url }}
         run: ${{ steps.detect-package-manager.outputs.manager }} run deploy
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
