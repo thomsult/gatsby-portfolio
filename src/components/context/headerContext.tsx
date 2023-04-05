@@ -37,9 +37,7 @@ export const useHeaderContext = () => React.useContext(Context)
 
 const Overlay:React.FC<IProps> = ({children,location}) => {
   const [isOpen, setIsOpen] = React.useState(defaultState.isOpen);
-  const toggleMenu = (bool:Boolean = !isOpen) => setIsOpen(Boolean(bool));  ;
-
-console.log(process.env.PATH_PREFIX)
+  const toggleMenu = (bool:Boolean = !isOpen) => setIsOpen(Boolean(bool));
 
   const {pathname} = location
   return (<Context.Provider value={{isOpen,toggleMenu}}>

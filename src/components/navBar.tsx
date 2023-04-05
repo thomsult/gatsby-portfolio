@@ -1,7 +1,7 @@
 /** @jsx jsx */
 /** @jsxFrag */
 import React, { ReactNode, createContext, useEffect, useState } from "react";
-import { Link, useStaticQuery, graphql } from "gatsby";
+import { Link, useStaticQuery, graphql, withPrefix } from "gatsby";
 import { jsx } from "theme-ui";
 import theme from "../gatsby-plugin-theme-ui/index";
 import { useHeaderContext } from "./context/headerContext";
@@ -231,7 +231,7 @@ MenuLinks.Item = ({ children, link, type }) => {
 };
 
 const NavBar: React.FC<{path:string}> = ({path}) => {
-  console.log(path)
+  const isHomepage = location.pathname === withPrefix("/")
   const data = useStaticQuery(graphql`
     query {
       site {
@@ -254,7 +254,7 @@ const NavBar: React.FC<{path:string}> = ({path}) => {
           <MenuLinks>
             {data.site.siteMetadata.menuLinks
             .filter((el: { name: string; })=>{
-              if(path===process.env.PATH_PREFIX ){
+              if(isHomepage ){
                 return el
               }else{
                 if(el.name ==="Home" || el.name ==="Mon CV"){
