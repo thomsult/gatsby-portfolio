@@ -8,7 +8,11 @@ import Layout from "../components/layout";
 import { jsx } from "theme-ui";
 import Button from "../components/utils/button";
 import { GatsbyImage, StaticImage, getImage } from "gatsby-plugin-image";
-import { DesktopMockup, PhoneMockup,TabletMockup } from "../components/utils/mockup";
+import {
+  DesktopMockup,
+  PhoneMockup,
+  TabletMockup,
+} from "../components/utils/mockup";
 export default function PageTemplate(props) {
   const frontMatter = props.pageContext.frontmatter;
   const headerImages = props.data.mdx.frontmatter;
@@ -53,6 +57,11 @@ export const query = graphql`
             gatsbyImageData(placeholder: BLURRED, formats: JPG)
           }
         }
+        projectImageTablet {
+          childrenImageSharp {
+            gatsbyImageData(placeholder: BLURRED, formats: JPG)
+          }
+        }
       }
     }
   }
@@ -60,12 +69,13 @@ export const query = graphql`
 
 const HeaderPages = (props) => {
   const { headerImages } = props;
-  const { projectImage, projectImageMobile } = headerImages;
+  const { projectImage, projectImageMobile,projectImageTablet } = headerImages;
   console.log(headerImages);
   const ImageMobile = getImage(
-    projectImageMobile.childrenImageSharp[0].gatsbyImageData
-  );
-  const Image = getImage(projectImage.childrenImageSharp[0].gatsbyImageData);
+    projectImageMobile?.childrenImageSharp[0].gatsbyImageData
+  )|| null;
+  const ImageDesktop = getImage(projectImage?.childrenImageSharp[0].gatsbyImageData) || null;
+  const ImageTablet = getImage(projectImageTablet?.childrenImageSharp[0].gatsbyImageData) || null;
   return (
     <header
       sx={{
@@ -76,42 +86,25 @@ const HeaderPages = (props) => {
       }}
     >
       <h1>Header</h1>
-      <PhoneMockup>
-        <GatsbyImage image={ImageMobile} alt="projectImage" />
+      <div
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "row",
+          padding: "1rem",
+        }}
+      >
+        <PhoneMockup>
+          <GatsbyImage image={ImageMobile} alt="projectImage" />
         </PhoneMockup>
-        <TabletMockup>
-        <GatsbyImage image={Image} alt="projectImage" />
-        </TabletMockup>
+        {projectImageTablet&&<TabletMockup>
+          <GatsbyImage image={ImageTablet} alt="projectImage" />
+        </TabletMockup>}
         <DesktopMockup>
-        <GatsbyImage image={Image} alt="projectImage" />
+          <GatsbyImage image={ImageDesktop} alt="projectImage" />
         </DesktopMockup>
+      </div>
     </header>
   );
 };
-
-
-
-
-
-
-
-
-{
-  /* <div class="image-mockup">
-    <div class="phone-wrap">
-      <img
-        class="phone"
-        src="./images/google_pixel_3___not_pink.png"
-        alt="google pixel mockup"
-      >
-      
-    </div>
-    <p class="phone-comment">Image de la version Mobile</p>
-    <div class="retina-wrap">
-      <img class="retina" src="./images/apple_imac_retina.png" alt=" apple retina mockup" >
-    </div>
-    <div class="surface-wrap">
-      <img class="surface" src="./images/microsoft_surface_book.png" alt="microsoft surface mockup" >
-    </div>
-  </div> */
-}

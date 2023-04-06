@@ -10,7 +10,7 @@ const PhoneMockup = ({ children }) => {
       <div
         sx={{
   
-          maxWidth: "80px",
+          Width: "40px",
           aspectRatio: "1/2",
           display: "flex",
           justifyContent: "center",
@@ -35,6 +35,9 @@ const PhoneMockup = ({ children }) => {
             bg: "blue",
             width: "85%",
             height: "85%",
+            display: "flex",
+            justifyContent: "center",
+            
           }}
         >
           {children}
@@ -51,7 +54,7 @@ const PhoneMockup = ({ children }) => {
     return (
       <div
         sx={{
-          height: "265px",
+          height: "auto",
             width: "450px",
           display: "flex",
           justifyContent: "center",
@@ -62,11 +65,10 @@ const PhoneMockup = ({ children }) => {
         <StaticImage
           sx={{
             position: "absolute",
-            top: "4px",
-            left: "0",
             width: "100%",
             height: "auto",
             zIndex: "1",
+            
           }}
           src="../../images/mock/microsoft_surface_book.png"
           alt=""
@@ -76,6 +78,9 @@ const PhoneMockup = ({ children }) => {
             bg: "blue",
             width: "73%",
             height: "auto",
+            display: "flex",
+            justifyContent: "center",
+            transform: "translateY(-2%)",
           }}
         >
           {children}
@@ -88,19 +93,18 @@ const PhoneMockup = ({ children }) => {
     return (
       <div
         sx={{
-          height: "455px",
+          height: "auto",
             width: "540px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           position: "relative",
+          
         }}
       >
         <StaticImage
           sx={{
             position: "absolute",
-            top: "0",
-            left: "0",
             width: "100%",
             height: "auto",
             zIndex: "1",
@@ -110,9 +114,13 @@ const PhoneMockup = ({ children }) => {
         />
         <div
           sx={{
+            aspectRatio: "16/9",
             width: "93%",
             height: "auto",
-            transform: "translateY(-59px)",
+            display: "flex",
+            justifyContent: "center",
+            overflow: "hidden",
+            transform: "translateY(-21%)",
           }}
         >
           {children}
