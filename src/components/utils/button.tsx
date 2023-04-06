@@ -1,6 +1,7 @@
 /** @jsx jsx */
 /** @jsxFrag */
 
+import { Link } from "gatsby";
 import React from "react";
 import { jsx } from "theme-ui";
 
@@ -63,6 +64,18 @@ const Button: React.FC<ButtonProps> = (props) => {
       >
         {props.children}
       </button>
+    );
+  }
+  if(props.url && props.options?.type === "internal") {
+    return (
+      <Link
+        sx={{
+          ...style,
+        }}
+        to={props.url}
+      >
+        {props.children}
+      </Link>
     );
   }
 

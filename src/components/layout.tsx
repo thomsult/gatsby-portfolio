@@ -1,7 +1,7 @@
 /** @jsx jsx */
 /** @jsxFrag */
 
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { Global, ThemeProvider, jsx } from "theme-ui";
 import { MDXProvider, useMDXComponents } from "@mdx-js/react";
@@ -23,16 +23,28 @@ interface LayoutProps {
   location: Location;
 }
 
+const GetCurrentPage = (location: Location) => {
+  const loc = location.pathname.split("/");
+  const currentPage = loc[loc.length - 2];
+  const hash = (location.hash || "").replace("#", "");
+
+  return currentPage || hash || "Home";
+};
+
 const Layout: React.FC<LayoutProps> = (props) => {
-  const components = {
-    ...Project,
-    ...About,
-    ...Hero,
-    ...Tools,
-    ...Formulaire,
-    IconWithName,
-    ImageHalf: ImageHalf,
-  };
+  const components = useMemo(
+    () => ({
+      ...Project,
+      ...About,
+      ...Hero,
+      ...Tools,
+      ...Formulaire,
+      IconWithName,
+      ImageHalf: ImageHalf,
+    }),
+    []
+  );
+
   const isHomePage = props.location.pathname === withPrefix("/");
   const { children } = props;
   const componentsWithStyles = useThemedStylesWithMdx(
@@ -41,6 +53,8 @@ const Layout: React.FC<LayoutProps> = (props) => {
   const MainTheme = {
     paddingTop: "4rem",
   };
+
+  const currentPage = GetCurrentPage(props.location);
 
   return (
     <ThemeProvider theme={theme}>
@@ -54,12 +68,12 @@ const Layout: React.FC<LayoutProps> = (props) => {
           },
         }}
       />
-      <Overlay isHomePage={isHomePage}>
-          <main sx={MainTheme}>
-            <MDXProvider components={componentsWithStyles}>
-              {children}
-            </MDXProvider>
-          </main>
+      <Overlay isHomePage={isHomePage} currentPage={currentPage}>
+        <main sx={MainTheme}>
+          <MDXProvider components={componentsWithStyles}>
+            {children}
+          </MDXProvider>
+        </main>
       </Overlay>
     </ThemeProvider>
   );

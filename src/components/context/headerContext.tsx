@@ -11,6 +11,7 @@ import {jsx} from 'theme-ui';
 interface IProps {
   children: React.ReactNode;
   isHomePage: Boolean;
+  currentPage: string;
 }
 
 interface IHeaderContext {
@@ -33,7 +34,7 @@ export const useHeaderContext = () => React.useContext(Context)
 
 
 
-const Overlay:React.FC<IProps> = ({children,isHomePage}) => {
+const Overlay:React.FC<IProps> = ({children,isHomePage,currentPage}) => {
   const [isOpen, setIsOpen] = React.useState(defaultState.isOpen);
   const toggleMenu = (bool:Boolean = !isOpen) => setIsOpen(Boolean(bool));
 
@@ -53,7 +54,8 @@ const Overlay:React.FC<IProps> = ({children,isHomePage}) => {
       transition: "opacity 0.3s ease-in-out",
     }}>
      </div>
-     <NavBar isHomePage={isHomePage}/>
+     
+     <NavBar isHomePage={isHomePage} currentPage={currentPage}/>
      {children}</Context.Provider>
   )
 }

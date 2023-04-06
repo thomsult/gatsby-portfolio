@@ -1,17 +1,32 @@
 /** @jsx jsx */
 /** @jsxFrag */
-import React, { ReactNode, createContext, useEffect, useState } from "react";
+import React, {
+  ReactNode,
+  createContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { Link, useStaticQuery, graphql, withPrefix } from "gatsby";
 import { jsx } from "theme-ui";
 import theme from "../gatsby-plugin-theme-ui/index";
 import { useHeaderContext } from "./context/headerContext";
+import useOffsetOfElement from "../hooks/useOffsetOfElement";
+import useScrollPosition from "../hooks/useScrollPosition";
 
 interface Header extends React.FC<{ children: ReactNode }> {
   Nav: React.FC<{ children: ReactNode }>;
   Button: React.FC<{ label: string; children: ReactNode }>;
 }
+interface LinkItem {
+  name: string;
+  link: string;
+  type: string;
+  active?: boolean;
+}
+
 interface MenuLinks extends React.FC<{ children: ReactNode }> {
-  Item: React.FC<{ children: React.ReactNode; link: string; type: string }>;
+  Item: React.FC<LinkItem>;
 }
 
 const Header: Header = ({ children }) => {
@@ -69,13 +84,10 @@ Header.Button = ({
   label: string;
   children: ReactNode;
 }) => {
-
-
-  const { isOpen,toggleMenu } = useHeaderContext();
+  const { isOpen, toggleMenu } = useHeaderContext();
   const handleResize = () => {
     if (window.innerWidth > 768) {
       toggleMenu(false);
-      
     }
   };
 
@@ -85,10 +97,6 @@ Header.Button = ({
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
-
-
-
 
   const color = theme.colors?.menuHamburger;
   return (
@@ -184,8 +192,8 @@ const MenuLinks: MenuLinks = ({ children }: { children: ReactNode }) => {
   );
 };
 
-MenuLinks.Item = ({ children, link, type }) => {
-  const { isOpen,toggleMenu } = useHeaderContext();
+MenuLinks.Item = ({ link, type, name, active }) => {
+  const { isOpen, toggleMenu } = useHeaderContext();
   return (
     <li
       sx={{
@@ -198,39 +206,44 @@ MenuLinks.Item = ({ children, link, type }) => {
     >
       {type === "external" ? (
         <a
-        sx={{
-          textDecoration: "none",
-          color: " #5c5c5c",
-          ":hover": {
-            opacity: "0.8",
-          },
-        }}
-        href={link}
-        >{children}
-        </a>):(<Link
-        sx={{
-          textDecoration: "none",
-          color: " #5c5c5c",
-          ":hover": {
-            opacity: "0.8",
-          },
-        }}
-        to={`/${link}`}
-        onClick={() => {
-          if (isOpen) {
-            toggleMenu(false);
-          }
-        }}
-      >
-        {children}
-      </Link>
+          sx={{
+            textDecoration: "none",
+            color: " #5c5c5c",
+            ":hover": {
+              opacity: "0.8",
+            },
+          }}
+          href={link}
+        >
+          {name}
+        </a>
+      ) : (
+        <Link
+          sx={{
+            textDecoration: "none",
+            color: active ? " #252525" : "#5c5c5c",
+            ":hover": {
+              opacity: "0.8",
+            },
+          }}
+          to={`/${link}`}
+          onClick={() => {
+            if (isOpen) {
+              toggleMenu(false);
+            }
+          }}
+        >
+          {name}
+        </Link>
       )}
-      
     </li>
   );
 };
 
-const NavBar: React.FC<{isHomePage:Boolean}> = ({isHomePage}) => {
+const NavBar: React.FC<{ isHomePage: Boolean; currentPage: string }> = ({
+  isHomePage,
+  currentPage,
+}) => {
   const data = useStaticQuery(graphql`
     query {
       site {
@@ -246,32 +259,63 @@ const NavBar: React.FC<{isHomePage:Boolean}> = ({isHomePage}) => {
       }
     }
   `);
+
+  const [links, setLinks] = useState<LinkItem[]>(
+    data.site.siteMetadata.menuLinks
+  );
+
+  useEffect(() => {
+    if (currentPage && !isHomePage) {
+      setLinks([
+        ...data.site.siteMetadata.menuLinks.filter(
+          (_: LinkItem, idx: number) => idx === 0
+        ),
+        {
+          link: currentPage,
+          name: currentPage.replace(/%20/g, " "),
+          type: "internal",
+          active: true,
+        },
+        ...data.site.siteMetadata.menuLinks.filter(
+          (_: LinkItem, idx: number, arr: LinkItem[]) => idx === arr.length - 1
+        ),
+      ]);
+    } else {
+      setLinks(
+        links.map((link) => {
+          if (link.name === currentPage) return { ...link, active: true };
+          else return { ...link, active: false };
+        })
+      );
+    }
+  }, [currentPage]);
+
+  const scroll = useScrollPosition();
+  useEffect(() => {
+    if (scroll && isHomePage) {
+      setLinks(
+        links.map((link) => {
+          const pos = useOffsetOfElement(
+            document.getElementById(link.name) as HTMLElement
+          ).top;
+          if (link.name === "Home") return { ...link, active: true };
+
+          if (pos && pos < scroll + 5) {
+            return { ...link, active: true };
+          } else return { ...link, active: false };
+        })
+      );
+    }
+  }, [scroll]);
+
   return (
     <Header>
       <Header.Nav>
         <Header.Button label="menu">
           <MenuLinks>
-            {data.site.siteMetadata.menuLinks
-            .filter((el: { name: string; })=>{
-              if(isHomePage ){
-                return el
-              }else{
-                if(el.name ==="Home" || el.name ==="Mon CV"){
-                  return el
-                }
-              }
-            })
-            .map(
-              (link: { link: string; name: string; type: string }) => (
-                <MenuLinks.Item
-                  key={link.name}
-                  link={link.link}
-                  type={link.type}
-                >
-                  {link.name}
-                </MenuLinks.Item>
-              )
-            )}
+            {links.map((link) => (
+              <MenuLinks.Item key={link.name} {...link} />
+            ))}
           </MenuLinks>
         </Header.Button>
       </Header.Nav>

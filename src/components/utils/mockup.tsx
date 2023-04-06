@@ -16,6 +16,7 @@ const PhoneMockup = ({ children }) => {
           justifyContent: "center",
           alignItems: "center",
           position: "relative",
+          
         }}
       >
         <StaticImage
@@ -27,6 +28,7 @@ const PhoneMockup = ({ children }) => {
             width: "100%",
             height: "100%",
             zIndex: "1",
+            filter: "drop-shadow(0 0 10px rgba(0, 0, 0, 0.562))"
           }}
           src="../../images/mock/google_pixel_3___not_pink.png"
           alt=""
@@ -37,7 +39,6 @@ const PhoneMockup = ({ children }) => {
             height: ["100%", "85%", "85%"],
             display: ["flex", "none", "flex"],
             justifyContent: "center",
-            
           }}
         >
           {children}
@@ -54,13 +55,13 @@ const PhoneMockup = ({ children }) => {
     return (
       <div
         sx={{
-          height: "auto",
-          aspectRatio: "3/2",
-            maxWidth: ["100%", "100%", "540px"],
-          display: ["none", "flex", "flex"],
-          justifyContent: "center",
-          alignItems: "center",
-          position: "relative",
+          height: ["auto","100%","auto"],
+          aspectRatio: ["none","none","3/2"],
+            maxWidth: ["100%", "100vw", "540px"],
+          display: ["none", "block", "flex"],
+          justifyContent: ["center", "none", "center"],
+          alignItems: ["center", "none", "flex-start"],
+          position: ["relative", "inherit", "relative"],
         }}
       >
         <StaticImage
@@ -70,6 +71,7 @@ const PhoneMockup = ({ children }) => {
             width: "100%",
             height: "auto",
             zIndex: "1",
+            filter: "drop-shadow(0 0 10px rgba(0, 0, 0, 0.562))"
             
           }}
           src="../../images/mock/microsoft_surface_book.png"
@@ -77,11 +79,11 @@ const PhoneMockup = ({ children }) => {
         />
         <div
           sx={{
-            width: "73%",
+            width: ["100%","100","73%"],
             height: "auto",
             display: "flex",
             justifyContent: "center",
-            transform: ["translateY(0%)", "translateY(0%) scale(1.4)", "translateY(-2%)"],
+            transform: ["translateY(0%)", "translateY(0%) scale(1)", "translateY(9%)"],
           }}
         >
           {children}
@@ -95,6 +97,7 @@ const PhoneMockup = ({ children }) => {
       <div
         sx={{
           height: "auto",
+          aspectRatio: "1.2",
             width: "540px",
           display: ["none", "none", "flex"],
           justifyContent: "center",
@@ -109,6 +112,7 @@ const PhoneMockup = ({ children }) => {
             width: "100%",
             height: "auto",
             zIndex: "1",
+            filter: "drop-shadow(0 0 10px rgba(0, 0, 0, 0.562))"
           }}
           src="../../images/mock/apple_imac_retina.png"
           alt=""

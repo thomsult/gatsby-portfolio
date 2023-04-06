@@ -1,4 +1,8 @@
-
+interface ImageSharp {
+  childrenImageSharp: {
+    gatsbyImageData: gatsbyImageData;
+  }[];
+}
 interface gatsbyImageData {
     layout: string;
     width: number;
@@ -26,16 +30,62 @@ interface gatsbyImageData {
       category: string;
       description: string;
       date: string;
-      projectImage: {
-        childrenImageSharp: {
-          gatsbyImageData: gatsbyImageData;
-        }[];
-      };
+      projectImage:ImageSharp;
     };
     id: string;
   }
+
+
+////////////Pages
+
+
+
+
+
+
+  interface HeaderImages{
+      projectImage: ImageSharp;
+      projectImageMobile: ImageSharp;
+      projectImageTablet:ImageSharp;
+  }
   
+  
+  
+  
+  
+  
+  
+  interface HeaderPagesProps {
+    headerImages: HeaderImages;
+    title: string;
+    description: string;
+    name: string;
+  
+    };
+  
+  
+  interface PageTemplateProps {
+    pageContext: {
+      frontmatter: {
+        title: string;
+        name: string;
+        description: string;
+        image: string;
+        date: string;
+        tags: string[];
+        gitHubUrl: string;
+        liveUrl: string;
+      };
+    };
+    data: {
+      mdx: {
+        frontmatter: HeaderImages;
+      };
+    };
+    location: Location;
+    children: React.ReactNode;
+  }
 
 
   
-  export {Project, gatsbyImageData}
+  export {Project, gatsbyImageData, HeaderPagesProps, PageTemplateProps}

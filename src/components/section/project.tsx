@@ -180,7 +180,7 @@ const ProjectListWild = (props: { projectsList: Project[] }) => {
       >
         {projectsList
           .filter(
-            (project) => project.frontmatter.school === "Wild code School"
+            (project) => project.frontmatter.school === "Wild Code School"
           )
           .map((project) => {
             const image = getImage(

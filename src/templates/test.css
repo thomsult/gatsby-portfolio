@@ -1,0 +1,9 @@
+.css-badigc-PhoneMockup > div{
+    position: inherit;
+}
+@media screen and (min-width: 635px){
+    .css-badigc-PhoneMockup > div{
+        position: relative;
+    }
+   
+}
