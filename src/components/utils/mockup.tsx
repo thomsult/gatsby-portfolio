@@ -9,8 +9,8 @@ const PhoneMockup = ({ children }) => {
     return (
       <div
         sx={{
-  
-          Width: "40px",
+          height: "auto",
+          Width: "100%",
           aspectRatio: "1/2",
           display: "flex",
           justifyContent: "center",
@@ -20,7 +20,8 @@ const PhoneMockup = ({ children }) => {
       >
         <StaticImage
           sx={{
-            position: "absolute",
+            position: ["relative", "absolute", "absolute"],
+            display: ["none", "flex", "flex"],
             top: "0",
             left: "0",
             width: "100%",
@@ -32,10 +33,9 @@ const PhoneMockup = ({ children }) => {
         />
         <div
           sx={{
-            bg: "blue",
-            width: "85%",
-            height: "85%",
-            display: "flex",
+            width: ["100%", "85%", "85%"],
+            height: ["100%", "85%", "85%"],
+            display: ["flex", "none", "flex"],
             justifyContent: "center",
             
           }}
@@ -55,8 +55,9 @@ const PhoneMockup = ({ children }) => {
       <div
         sx={{
           height: "auto",
-            width: "450px",
-          display: "flex",
+          aspectRatio: "3/2",
+            maxWidth: ["100%", "100%", "540px"],
+          display: ["none", "flex", "flex"],
           justifyContent: "center",
           alignItems: "center",
           position: "relative",
@@ -64,7 +65,8 @@ const PhoneMockup = ({ children }) => {
       >
         <StaticImage
           sx={{
-            position: "absolute",
+            position: ["absolute", "relative", "absolute"],
+            display: ["none", "none", "flex"],
             width: "100%",
             height: "auto",
             zIndex: "1",
@@ -75,12 +77,11 @@ const PhoneMockup = ({ children }) => {
         />
         <div
           sx={{
-            bg: "blue",
             width: "73%",
             height: "auto",
             display: "flex",
             justifyContent: "center",
-            transform: "translateY(-2%)",
+            transform: ["translateY(0%)", "translateY(0%) scale(1.4)", "translateY(-2%)"],
           }}
         >
           {children}
@@ -95,7 +96,7 @@ const PhoneMockup = ({ children }) => {
         sx={{
           height: "auto",
             width: "540px",
-          display: "flex",
+          display: ["none", "none", "flex"],
           justifyContent: "center",
           alignItems: "center",
           position: "relative",

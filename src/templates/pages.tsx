@@ -73,9 +73,9 @@ const HeaderPages = (props) => {
   console.log(headerImages);
   const ImageMobile = getImage(
     projectImageMobile?.childrenImageSharp[0].gatsbyImageData
-  )|| null;
-  const ImageDesktop = getImage(projectImage?.childrenImageSharp[0].gatsbyImageData) || null;
-  const ImageTablet = getImage(projectImageTablet?.childrenImageSharp[0].gatsbyImageData) || null;
+  );
+  const ImageDesktop = getImage(projectImage?.childrenImageSharp[0].gatsbyImageData)
+  const ImageTablet = getImage(projectImageTablet?.childrenImageSharp[0].gatsbyImageData);
   return (
     <header
       sx={{
@@ -83,24 +83,23 @@ const HeaderPages = (props) => {
         maxWidth: "1200px",
         margin: "auto",
         overflow: "hidden",
+        paddingBottom: "2rem",
       }}
     >
-      <h1>Header</h1>
       <div
         sx={{
           display: "flex",
+          flexDirection: "row",
           justifyContent: "center",
           alignItems: "center",
-          flexDirection: "row",
-          padding: "1rem",
         }}
       >
         <PhoneMockup>
           <GatsbyImage image={ImageMobile} alt="projectImage" />
         </PhoneMockup>
-        {projectImageTablet&&<TabletMockup>
+        <TabletMockup>
           <GatsbyImage image={ImageTablet} alt="projectImage" />
-        </TabletMockup>}
+        </TabletMockup>
         <DesktopMockup>
           <GatsbyImage image={ImageDesktop} alt="projectImage" />
         </DesktopMockup>
