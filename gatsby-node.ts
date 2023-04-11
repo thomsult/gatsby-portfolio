@@ -1,6 +1,5 @@
 import fs from "fs";
 import { GatsbyNode } from "gatsby";
-import indexPage  from "./src/nodes/indexPage";
 
 const path = require("path");
 const PageTemplate = path.resolve("./src/templates/pages.tsx");
@@ -48,12 +47,6 @@ const createPages: GatsbyNode["createPages"] = async ({
   reporter,
 }) => {
   const { createPage } = actions;
-  await indexPage({
-    graphql,
-    actions,
-    reporter,
-  });
-
   const result:MdxResult = (await graphql(`
   query {
     allMdx(
@@ -115,3 +108,11 @@ posts.forEach((node: MdxNode) => {
 
 exports.createPages = createPages;
 
+
+exports.onCreatePage = ({ page, actions }) => {
+  const { createPage, deletePage } = actions
+  if(page.path === "/projects/"){
+  deletePage(page)
+  // You can access the variable "house" in your page queries now
+  }
+}
