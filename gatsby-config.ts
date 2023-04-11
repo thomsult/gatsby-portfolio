@@ -11,7 +11,7 @@ const config: GatsbyConfig = {
     title: "Portfolio Thomas Sultan",
     description: "A portfolio website built with React and Gatsby",
     siteUrl: process.env.SITE_URL,
-    image: "/images/icon.png",
+    image: "./src/images/icon.png",
     menuLinks: [
       {
         name: 'Home',
@@ -72,13 +72,7 @@ const config: GatsbyConfig = {
       "path": `${__dirname}/src/pages/projects/`
     },
     __key: "projects"
-  },{
-      resolve: "gatsby-source-filesystem",
-      options: {
-        name: "content",
-        path: `${__dirname}/src/content`,
-      },
-    },
+  },
     {
       resolve: "gatsby-plugin-alias-imports",
       options: {
@@ -91,6 +85,23 @@ const config: GatsbyConfig = {
         extensions: []
       }
     },
+    "gatsby-plugin-sharp",
+  {
+    resolve: "gatsby-transformer-remark",
+    options: {
+      plugins: [
+        {
+          resolve: "gatsby-remark-images",
+          options: {
+            // It's important to specify the maxWidth (in pixels) of
+            // the content container as this plugin uses this as the
+            // base for generating different widths of each image.
+            maxWidth: 590,
+          },
+        },
+      ],
+    },
+  },
   ]
 };
 

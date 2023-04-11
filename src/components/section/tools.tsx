@@ -1,6 +1,7 @@
 /** @jsx jsx */
 /** @jsxFrag */
 
+import { Key } from "react";
 import useQuery from "../../hooks/useQuery";
 import { jsx } from "theme-ui";
 
@@ -24,6 +25,7 @@ function Tools() {
       if (name && tools.includes(name[0])) {
         return item;
       }
+      return null;
     })
     .filter(Boolean);
 
@@ -48,7 +50,8 @@ function Tools() {
       }}
       >
         {svgList.map((item) => {
-          return (
+          const name = item?.url.match(/([A-Z])\w+/g)||[];
+          return name?.[0] !== undefined && item? (
             <li
             key={item.id}
             >
@@ -58,11 +61,11 @@ function Tools() {
                   height: "50px",
                 }}
                 src={item.url}
-                alt={item.url.match(/([A-Z])\w+/g)}
-                title={item.url.match(/([A-Z])\w+/g)}
+                alt={name?.[0]}
+                title={name?.[0]}
               />
             </li>
-          );
+          ):null;
         })}
       </ul>
     </section>

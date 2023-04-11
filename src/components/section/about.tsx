@@ -1,11 +1,11 @@
 /** @jsx jsx */
 /** @jsxFrag */
-import { jsx } from "theme-ui";
+import { SxProp, jsx } from "theme-ui";
 import { Image } from "theme-ui";
 import { StaticImage, getImage } from "gatsby-plugin-image";
 import React from "react";
 
-const About = (props) => {
+const About = (props: jsx.JSX.IntrinsicAttributes & React.ClassAttributes<HTMLDivElement> & React.HTMLAttributes<HTMLDivElement> & SxProp) => {
   return (
     <section
     sx={{
@@ -34,7 +34,7 @@ const About = (props) => {
     </section>
   );
 };
-const AboutText = (props) => {
+const AboutText = (props: jsx.JSX.IntrinsicAttributes & React.ClassAttributes<HTMLDivElement> & React.HTMLAttributes<HTMLDivElement> & SxProp) => {
   return (
     <div
       sx={{
@@ -72,7 +72,7 @@ const AboutText = (props) => {
     />
   );
 };
-const AboutCompetences = (props) => {
+const AboutCompetences = (props: { title: string; competences: string; }) => {
   const title = props.title;
   const competences = JSON.parse(props.competences);
   return (

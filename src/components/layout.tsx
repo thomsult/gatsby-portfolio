@@ -17,6 +17,7 @@ import Formulaire from "./section/formulaire";
 import ImageHalf from "./utils/imageHalfSection";
 import Overlay from "./context/headerContext";
 import { withPrefix } from "gatsby";
+import { Head } from "@/templates";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -39,8 +40,8 @@ const Layout: React.FC<LayoutProps> = (props) => {
       ...Hero,
       ...Tools,
       ...Formulaire,
+      ...ImageHalf,
       IconWithName,
-      ImageHalf: ImageHalf,
     }),
     []
   );

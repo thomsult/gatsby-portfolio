@@ -1,3 +1,4 @@
+import {ImageDataLike} from 'gatsby-plugin-image';
 interface ImageSharp {
   childrenImageSharp: {
     gatsbyImageData: gatsbyImageData;
@@ -43,25 +44,32 @@ interface gatsbyImageData {
 
 
 
-  interface HeaderImages{
-      projectImage: ImageSharp;
-      projectImageMobile: ImageSharp;
-      projectImageTablet:ImageSharp;
+  
+  interface Data{
+    mdx?: {
+      frontmatter: {
+        title: string;
+
+      };
+      id: string;
+    };
+    allFile: {
+      nodes:[{
+        childImageSharp:ImageDataLike,
+        name:string
+      }]
+    };
   }
   
   
   
   
-  
-  
-  
   interface HeaderPagesProps {
-    headerImages: HeaderImages;
-    title: string;
-    description: string;
-    name: string;
-  
-    };
+    title:string,
+    description:string,
+    name:string
+    data:Data;
+  }
   
   
   interface PageTemplateProps {
@@ -77,11 +85,7 @@ interface gatsbyImageData {
         liveUrl: string;
       };
     };
-    data: {
-      mdx: {
-        frontmatter: HeaderImages;
-      };
-    };
+    data:Data;
     location: Location;
     children: React.ReactNode;
   }

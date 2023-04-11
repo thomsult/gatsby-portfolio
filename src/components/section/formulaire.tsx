@@ -5,8 +5,7 @@ import { jsx } from "theme-ui";
 
 import ImageHalf from "../utils/imageHalfSection";
 import Button from "../utils/button";
-
-const Formulaire = () => {
+const Formulaire = (props) => {
   return (
     <section
       id="Contact"
@@ -29,7 +28,7 @@ const Formulaire = () => {
       }}
     >
       <FormulaireForm />
-      <ImageHalf />
+      {props.children}
     </section>
   );
 };
@@ -82,6 +81,7 @@ const FormulaireForm = () => {
           Contactez-moi
         </h1>
         <form
+          action="https://getform.io/f/2bae6736-aa2c-4f3a-a12e-adf9d2937c79" method="POST"
           sx={{
             width: "100%",
             height: "100%",
@@ -124,22 +124,25 @@ const FormulaireForm = () => {
             },
           }}
         >
+          <input type="hidden" name="_gotcha" style={{
+            display: "none!important"
+          }}/>
           <div>
-            <label htmlFor="name">Nom</label>
+            <label htmlFor="user_Name">Nom</label>
             <input
               type="text"
-              id="name"
-              name="name"
+              id="user_Name"
+              name="user_Name"
               placeholder="Votre nom"
               pattern="[a-zA-Z]{3,}"
             />
           </div>
           <div>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="user_email">Email</label>
             <input
-              type="email"
-              id="email"
-              name="email"
+              type="user_email"
+              id="user_email"
+              name="user_email"
               placeholder="Votre email"
               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
             />
@@ -149,8 +152,8 @@ const FormulaireForm = () => {
               flex: "1",
             }}
           >
-            <label htmlFor="message">Message</label>
-            <textarea id="message" name="message" placeholder="Votre message" />
+            <label htmlFor="user_message">Message</label>
+            <textarea id="user_message" name="user_message" placeholder="Votre message" />
           </div>
           <Button
             options={{

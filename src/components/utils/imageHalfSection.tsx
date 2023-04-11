@@ -7,6 +7,7 @@ import React from "react";
 
 interface ImageHalfProps {
     caption?: string;
+    aboutPicture?: any;
 }
 
 
@@ -20,7 +21,7 @@ const ImageToulouse = () => {
       objectFit: "cover",
       width: "auto",
     }}
-    src={"https://images.unsplash.com/photo-1541792344043-3f5b1630e42d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80"}
+    src="https://images.unsplash.com/photo-1541792344043-3f5b1630e42d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80"
     alt="image Toulouse"
   /><figcaption
   sx={{
@@ -59,14 +60,17 @@ const ImageToulouse = () => {
 }
 
 
-const ImageInfo = ({caption}) => {
-  return (<><StaticImage
+const ImageInfo = ({caption,aboutPicture}:{
+  caption: { name: string; href: string };
+  aboutPicture: any;
+}) => {
+  return (<><GatsbyImage
     sx={{
       height: "100%",
       objectFit: "cover",
       width: "auto",
     }}
-    src={"../../images/md-mahdi-nPVhtHtF-TI-unsplash.jpg"}
+    image={getImage(aboutPicture)}
     alt="image informatique"
   />
   <figcaption
@@ -110,7 +114,8 @@ const ImageInfo = ({caption}) => {
 
 const ImageHalf:React.FC<ImageHalfProps> = (props) => {
     const caption = props.caption&&JSON.parse(props.caption) as { name: string; href: string };
-  
+    const aboutPicture = props.aboutPicture;
+
     return (
       <div
         sx={{
@@ -134,10 +139,10 @@ const ImageHalf:React.FC<ImageHalfProps> = (props) => {
             position: "relative",
           }}
         >
-          {caption?<ImageInfo caption={caption}/>:<ImageToulouse/>}
+          {caption?<ImageInfo aboutPicture={aboutPicture} caption={caption}/>:<ImageToulouse/>}
         </figure>
       </div>
     );
   };
 
-export default ImageHalf  ;
+export default {ImageHalf}  ;

@@ -11,7 +11,7 @@ interface PropsType {
 }
 
 const Hero = (props: PropsType) => {
-  const {children} = props
+  const { children } = props;
   return (
     <section
       id="Accueil"
@@ -23,31 +23,28 @@ const Hero = (props: PropsType) => {
         alignItems: "center",
         justifyContent: "center",
         overflow: "hidden",
-        }}
-       >
-        <div
-             sx={{
-              width: "100%",
-              bg: "background",
-              display: "flex",
-              flexDirection: "column-reverse",
-              alignItems: "center",
-              justifyContent: "flex-end",
-              maxWidth: "1200px",
-              margin: "0 auto",
-              paddingBottom: "4rem",
-              
-      
-              "@media screen and (min-width: 768px)": {
-                flexDirection: "row",
-                paddingTop: "0",
+      }}
+    >
+      <div
+        sx={{
+          width: "100%",
+          bg: "background",
+          display: "flex",
+          flexDirection: "column-reverse",
+          alignItems: "center",
+          justifyContent: "flex-end",
+          maxWidth: "1200px",
+          margin: "0 auto",
+          paddingBottom: "4rem",
 
-              },
-            }}
-        >
+          "@media screen and (min-width: 768px)": {
+            flexDirection: "row",
+            paddingTop: "0",
+          },
+        }}
+      >
         {children}
-        </div>
-      
+      </div>
     </section>
   );
 };
@@ -67,14 +64,16 @@ const HeroText = (props: PropsType) => {
   );
 };
 const HeroHeading = (props: PropsType) => {
-  const fadeIn = keyframes({ from: { 
-    opacity: 0,
-    transform: "translateX(-100%)"
-   }, 
-   to: { 
-    opacity: 1, 
-    transform: "translateX(0)"
-  } })
+  const fadeIn = keyframes({
+    from: {
+      opacity: 0,
+      transform: "translateX(-100%)",
+    },
+    to: {
+      opacity: 1,
+      transform: "translateX(0)",
+    },
+  });
   return (
     <h1
       sx={{
@@ -89,14 +88,16 @@ const HeroHeading = (props: PropsType) => {
   );
 };
 const HeroParagraph = (props: PropsType) => {
-  const fadeIn = keyframes({ from: { 
-    opacity: 0,
-    transform: "translateX(-200%)"
-   }, 
-   to: { 
-    opacity: 1, 
-    transform: "translateX(0)"
-  } })
+  const fadeIn = keyframes({
+    from: {
+      opacity: 0,
+      transform: "translateX(-200%)",
+    },
+    to: {
+      opacity: 1,
+      transform: "translateX(0)",
+    },
+  });
   return (
     <p
       sx={{
@@ -116,27 +117,29 @@ const HeroList = (props: PropsType) => {
   const { svg } = useQuery();
   const childrenWithProps = React.Children.map(props.children, (child) => {
     if (React.isValidElement(child)) {
+      const props = { svgList: svg } as {
+        svgList: [
+          {
+            url: string;
+            id: string;
+          }
+        ];
+      };
 
-        const props = { svgList: svg } as { svgList: [
-            {
-                url: string;
-                id: string;
-
-            }] }
-
-      return React.cloneElement(child, props)
+      return React.cloneElement(child, props);
     }
     return child;
   });
-  const fadeIn = keyframes({ from: { 
-    opacity: 0,
-    transform: "translateX(-200%)"
-   }, 
-   to: { 
-    opacity: 1, 
-    transform: "translateX(0)"
-  } })
-
+  const fadeIn = keyframes({
+    from: {
+      opacity: 0,
+      transform: "translateX(-200%)",
+    },
+    to: {
+      opacity: 1,
+      transform: "translateX(0)",
+    },
+  });
 
   return (
     <ul
@@ -171,11 +174,11 @@ interface ListItemProps {
 const HeroListItem = (props: ListItemProps) => {
   const childrenWithProps = React.Children.map(props.children, (child) => {
     if (React.isValidElement(child)) {
-        const newProps = {
-            img: props.svgList.filter((el) => {
-              return el.url.includes(child.props.name) ? el : null;
-            })[0],
-          } as { img: { url: string; id: string } };
+      const newProps = {
+        img: props.svgList.filter((el) => {
+          return el.url.includes(child.props.name) ? el : null;
+        })[0],
+      } as { img: { url: string; id: string } };
       return React.cloneElement(child, newProps);
     }
     return child;
@@ -183,15 +186,19 @@ const HeroListItem = (props: ListItemProps) => {
   return <li>{childrenWithProps}</li>;
 };
 
-const HeroImage = (props) => {
-  const fadeIn = keyframes({ from: { 
-    opacity: 0,
-    transform: "translateX(200%)"
-   }, 
-   to: { 
-    opacity: 1, 
-    transform: "translateX(0)"
-  } })
+const HeroImage = (props: {
+  img: { images: { fallback: { src: string | undefined } } };
+}) => {
+  const fadeIn = keyframes({
+    from: {
+      opacity: 0,
+      transform: "translateX(200%)",
+    },
+    to: {
+      opacity: 1,
+      transform: "translateX(0)",
+    },
+  });
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

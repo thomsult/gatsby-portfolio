@@ -1,7 +1,8 @@
 ---
 title: Home Page
+profilPicture: "../../images/photoProfile.jpg"
+aboutPicture: "../../images/md-mahdi-nPVhtHtF-TI-unsplash.jpg"
 ---
-
 <Hero data={props}>
   <HeroText>
     <HeroHeading>Développeur web Toulousain</HeroHeading>
@@ -22,10 +23,10 @@ title: Home Page
       </HeroListItem>
     </HeroList>
   </HeroText>
-  <HeroImage img={props.HeroImage} />
+  <HeroImage img={props.heroImage} />
 </Hero>
 <About>
-  <ImageHalf caption='{"href":"https://unsplash.com/fr/@mahdi17","name":"© Md Mahdi - Unsplash.com"}' />
+  <ImageHalf aboutPicture={props.aboutPicture} caption='{"href":"https://unsplash.com/fr/@mahdi17","name":"© Md Mahdi - Unsplash.com"}' />
   <AboutText>
     <h1>A propos de Moi</h1>
     
@@ -69,4 +70,6 @@ title: Home Page
 </About>
 <ProjectSection header="Mes Projets" projects={props.projects} />
 <Tools />
-<Formulaire />
+<Formulaire>
+ <ImageHalf/>
+</Formulaire>

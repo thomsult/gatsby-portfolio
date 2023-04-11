@@ -8,7 +8,6 @@ interface SEOProps {
 }
 export const SEO = ({ title, description, pathname, children }:SEOProps) => {
     const { title: defaultTitle, description: defaultDescription, image, siteUrl } = useSiteMetadata()
-
     const seo = {
         title: title || defaultTitle,
         description: description || defaultDescription,

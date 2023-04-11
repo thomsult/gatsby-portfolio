@@ -1,7 +1,7 @@
 /** @jsx jsx */
 /** @jsxFrag */
 
-import { graphql } from "gatsby";
+import {graphql, HeadFC} from 'gatsby';
 import { MDXProvider } from "@mdx-js/react"; // Provide common components here
 import Layout from "../components/layout";
 import "./test.css";
@@ -14,7 +14,9 @@ import {
   TabletMockup,
 } from "../components/utils/mockup";
 import { PageTemplateProps,HeaderPagesProps } from "@/type/gatsby-graphql";
-
+import { SEO } from '../components/seo';
+import React from 'react';
+import ImageChange from '../components/utils/imageChange';
 
 
 
@@ -24,18 +26,16 @@ import { PageTemplateProps,HeaderPagesProps } from "@/type/gatsby-graphql";
 
 export default function PageTemplate(props:PageTemplateProps) {
   const frontMatter = props.pageContext.frontmatter;
-  const headerImages = props.data.mdx.frontmatter;
-  console.log(props);
   const { title,name, description, image, date, tags, gitHubUrl, liveUrl } =
     frontMatter;
   return (
     <Layout location={props.location}>
-      <HeaderPages 
+      { <HeaderPages 
       title={title} 
-      headerImages={headerImages} 
+      data={props.data} 
       description={description}
       name={name}
-      />
+      /> }
       <section
         sx={{
           maxWidth: "1200px",
@@ -102,42 +102,65 @@ export default function PageTemplate(props:PageTemplateProps) {
   );
 }
 export const query = graphql`
-  query ($id: String) {
+  query ($id: String, $image: String) {
     mdx(id: { eq: $id }) {
       id
       frontmatter {
-        projectImage {
-          childrenImageSharp {
-            gatsbyImageData(placeholder: BLURRED, formats: JPG)
-          }
-        }
-        projectImageMobile {
-          childrenImageSharp {
-            gatsbyImageData(placeholder: BLURRED, formats: JPG)
-          }
-        }
-        projectImageTablet {
-          childrenImageSharp {
-            gatsbyImageData(placeholder: BLURRED, formats: JPG)
-          }
-        }
+        title
       }
     }
+    allFile(
+      filter: {dir: {regex: $image}}
+      sort: {relativeDirectory: ASC}
+    ) {
+    nodes {
+      childImageSharp {
+        gatsbyImageData
+      }
+      name
+    }
+  }
   }
 `;
 
+
+
+
+
+
+const filterImages =(nodes:[{
+  childImageSharp:ImageDataLike,
+  name:string
+}],regex:RegExp) =>{
+  return nodes
+  .filter((node) => node.name.match(regex))
+  .sort((a,b)=>a.name.localeCompare(b.name))
+  .map((node) => getImage(node.childImageSharp))
+}
+
+
+
+
+
+
+
+
 const HeaderPages:React.FC<HeaderPagesProps> = (props) => {
-  const { headerImages,title,description,name } = props;
-  const { projectImage, projectImageMobile, projectImageTablet } = headerImages;
-  const ImageMobile = getImage(
-    projectImageMobile?.childrenImageSharp[0].gatsbyImageData as ImageDataLike
-  );
-  const ImageDesktop = getImage(
-    projectImage?.childrenImageSharp[0].gatsbyImageData as ImageDataLike
-  );
-  const ImageTablet = getImage(
-    projectImageTablet?.childrenImageSharp[0].gatsbyImageData as ImageDataLike
-  );
+  const { title,description,name } = props;
+  const { nodes } = props.data.allFile
+  const [index, setIndex] = React.useState(0)
+
+  const ImageList = {
+    mobile:filterImages(nodes,/mobile/i),
+    desktop:filterImages(nodes,/desktop/i),
+    tablet:filterImages(nodes,/tablet/i)
+  }
+
+
+
+  const ImageMobile = ImageList.mobile[index]
+  const ImageDesktop = ImageList.desktop[index]
+  const ImageTablet = ImageList.tablet[index]
   return (
     <header
     id={name}
@@ -204,6 +227,7 @@ const HeaderPages:React.FC<HeaderPagesProps> = (props) => {
       </div>
       <div
       sx={{
+        position: "relative",
         padding: ["1em", "1em", "2em 0 0 0"],
         margin: "1em 0 0 0",
         color: ["text", "text", "white"],
@@ -219,8 +243,20 @@ const HeaderPages:React.FC<HeaderPagesProps> = (props) => {
       <h1
       >{title}</h1>
       <p>{description}</p>
-
+      <ImageChange 
+      nbImages={ImageList.desktop.length}
+      OnChange={(index:number)=>{
+        setIndex(index)
+      }}
+      />
       </div>
+      
     </header>
   );
 };
+
+export const Head = (props:PageTemplateProps) => {
+  const frontMatter = props.pageContext.frontmatter;
+
+  return <SEO title={frontMatter.name}  description={frontMatter.description}/>
+}

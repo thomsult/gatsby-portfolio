@@ -1,8 +1,26 @@
 import react from 'react';
 import {graphql, useStaticQuery} from "gatsby";
 
+
+interface Query {
+  allFile: {
+    edges: {
+      node: {
+        id: string;
+        publicURL: string;
+      };
+    }[];
+  };
+}
+
+
+
+
+
+
+
 const useQuery = () => {
-    const query = useStaticQuery(graphql`
+    const query:Query = useStaticQuery(graphql`
     query MyQuery {
   allFile(filter: {publicURL: {regex: "/svg/"}}) {
     edges {

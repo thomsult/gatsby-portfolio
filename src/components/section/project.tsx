@@ -102,9 +102,19 @@ const ProjectEntries: React.FC<ProjectEntryProps> = ({
           sx={{
             fontSize: "1.2em",
             fontWeight: 500,
-            padding: "0.4em 0",
+            height: "fit-content",
             color: "primary",
+            position: "relative",
             textDecoration: "none",
+            borderRadius: "4px",
+            "&:hover": {
+              boxShadow: "0 1px 1px rgba(0,0,0,.1)",
+              "&>div": {
+                color: "white",
+                opacity: 1,
+                height: "100%",
+              },
+            },
           }}
           href={`./${name}/`}
         >
@@ -114,19 +124,47 @@ const ProjectEntries: React.FC<ProjectEntryProps> = ({
                 height: "auto",
                 width: "100%",
                 borderRadius: "4px",
-                marginBottom: "1em",
                 boxShadow: "0 1px 1px rgba(0,0,0,.05)",
               }}
               image={image}
               alt={`Voir le projet ${title}`}
             />
           )}
+          <div
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "flex-end",
+              padding: "calc(1em + 2px)",
+              width: "100%",
+              height: "0%",
+              borderRadius: "4px",
+              background:
+                "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%)",
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              opacity: 0,
+              transition: "all 0.3s ease-in-out",
+            }}
+          >
+            <span
+            sx={{
+              border: "2px solid white",
+              borderRadius: "4px",
+              padding: "0.5em 1em",
+              color: "white",
+              fontSize: "1em",
+              fontWeight: 500,
+            }}
+            >Voir le Projet</span>
+          </div>
         </a>
       </header>
       <h2
         sx={{
           fontSize: "1.5rem",
-          fontWeight: 500,
+          fontWeight: 600,
           padding: "0.4em 0",
         }}
       >
@@ -139,9 +177,12 @@ const ProjectEntries: React.FC<ProjectEntryProps> = ({
           gap: "0.5em",
         }}
       >
-        <Button options={{
-          color:"primary"
-        }} url={gitHubUrl}>
+        <Button
+          options={{
+            color: "primary",
+          }}
+          url={gitHubUrl}
+        >
           GitHub
         </Button>
         <Button url={liveUrl}>Site</Button>
